@@ -68,12 +68,19 @@
                                             @if (auth()->check())
                                                 @if (auth()->user()->level == 1)
                                                     <th>
-                                                        <button type="button" class="btn btn-sm btn-primary"
-                                                            data-toggle="modal"
-                                                            data-target="#modalBayarHutang_{{ $h->id_hutang }}"
-                                                            title="Bayar">
-                                                            <i class="fa fa-money"></i>
-                                                        </button>
+                                                        @if ($h->total != 0)
+                                                            <button type="button" class="btn btn-sm btn-primary"
+                                                                data-toggle="modal"
+                                                                data-target="#modalBayarHutang_{{ $h->id_hutang }}"
+                                                                title="Bayar">
+                                                                <i class="fa fa-money"></i>
+                                                            </button>
+                                                        @else
+                                                            <button type="button" class="btn btn-sm btn-primary"
+                                                                title="Sudah Lunas" disabled>
+                                                                <i class="fa fa-money"></i>
+                                                            </button>
+                                                        @endif
                                                         <form method="POST" action="{{ 'hutang/' . $h->id_hutang }}"
                                                             style="display: inline">
                                                             @csrf
@@ -86,8 +93,11 @@
                                                         </form>
                                                     </th>
                                                 @elseif (auth()->user()->level == 2)
-                                                    <th><button class="btn btn-sm btn-warning" title="Tidak Ada Akses">
-                                                            <i class="fa fa-exclamation-triangle"></i> </button></th>
+                                                    <th>
+                                                        <button class="btn btn-sm btn-warning" title="Tidak Ada Akses">
+                                                            <i class="fa fa-exclamation-triangle"></i>
+                                                        </button>
+                                                    </th>
                                                 @endif
                                             @endif
                                         </tr>
