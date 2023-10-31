@@ -48,6 +48,7 @@
                                         <th>Nama</th>
                                         <th>Jumlah</th>
                                         <th>Total</th>
+                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -59,12 +60,18 @@
                                             <th>{{ $h->nama }}</th>
                                             <th>Rp. {{ number_format($h->jumlah, 0, ',', '.') }}</th>
                                             <th>Rp. {{ number_format($h->total, 0, ',', '.') }}</th>
+                                            @if ($h->total == 0)
+                                                <th><span class="label label-success">Lunas</span></th>
+                                            @else
+                                                <th><span class="label label-warning">Belum Lunas</span></th>
+                                            @endif
                                             @if (auth()->check())
                                                 @if (auth()->user()->level == 1)
                                                     <th>
                                                         <button type="button" class="btn btn-sm btn-primary"
                                                             data-toggle="modal"
-                                                            data-target="#modalBayarHutang_{{ $h->id_hutang }}">
+                                                            data-target="#modalBayarHutang_{{ $h->id_hutang }}"
+                                                            title="Bayar">
                                                             <i class="fa fa-money"></i>
                                                         </button>
                                                         <form method="POST" action="{{ 'hutang/' . $h->id_hutang }}"
