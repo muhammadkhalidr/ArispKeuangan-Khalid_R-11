@@ -15,6 +15,7 @@ use App\Http\Controllers\CetakLaporanController;
 use App\Http\Controllers\CetakLaporanGajiController;
 use App\Http\Controllers\CetakLaporanPembelianController;
 use App\Http\Controllers\GajiKaryawanController;
+use App\Http\Controllers\HutangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,9 @@ Route::group(['middleware' => ['auth']], function () {
 
         // Untuk Data Keuangan
         Route::get('/keuangan', [KeuanganController::class, 'index'])->name('keuangan');
+
+        Route::resource('/hutang', HutangController::class);
+        Route::post('/hutang/bayar', [HutangController::class, 'bayarHutang'])->name('hutang.bayar');
 
         // Untuk Laporan
         // Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');

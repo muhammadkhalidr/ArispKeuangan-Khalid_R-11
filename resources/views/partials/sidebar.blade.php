@@ -23,6 +23,7 @@
                         <ul aria-expanded="false">
                             <li><a href="{{ url('pengeluaran') }}">Pengeluaran</a></li>
                             <li><a href="{{ url('pembelian') }}">Pembelian</a></li>
+                            <li><a href="{{ url('hutang') }}">Hutang</a></li>
                         </ul>
                     </li>
                     <li class="nav-label">Karyawan</li>
