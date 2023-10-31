@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class PermissionSeeder extends Seeder
 {
@@ -16,52 +15,31 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $role_admin = Role::updateOrCreate(
-            [
-                'name' => 'admin',
-            ],
-            [
-                'name' => 'admin'
-            ]
+            ['name' => 'admin']
         );
+
         $role_owner = Role::updateOrCreate(
-            [
-                'name' => 'owner',
-            ],
-            [
-                'name' => 'owner'
-            ]
+            ['name' => 'owner']
         );
 
-        $permission = Permission::updateOrCreate(
-            [
-                'name' => 'orderan.data',
-                'name' => 'pengeluaran.data',
-                'name' => 'pembelian.data',
-            ],
-            [
-                'name' => 'orderan.data',
-                'name' => 'pengeluaran.data',
-                'name' => 'pembelian.data',
-            ]
-        );
-        $permission2 = Permission::updateOrCreate(
-            [
-                'name' => 'pengguna.data',
-            ],
-            [
-                'name' => 'pengguna.data'
-            ]
+        $permissions = [
+            'orderan.data',
+            'pengeluaran.data',
+            'pembelian.data',
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::updateOrCreate(['name' => $permission]);
+        }
+
+        $permission_pengguna = Permission::updateOrCreate(
+            ['name' => 'pengguna.data']
         );
 
-        $role_admin->givePermissionTo($permission);
-        $role_owner->givePermissionTo($permission2);
+        $role_admin->syncPermissions($permissions);
+        $role_owner->givePermissionTo($permission_pengguna);
 
-        // $admin = User::find(1);
-        // $owner = User::find(2);
-        // $admin->assignRole('admin');
-        // $owner->assignRole('owner');
-
-        $users = User::where('level', 1)->orWhere('level', 2)->get();
+        $users = User::whereIn('level', [1, 2])->get();
 
         foreach ($users as $user) {
             if ($user->level == 1) {

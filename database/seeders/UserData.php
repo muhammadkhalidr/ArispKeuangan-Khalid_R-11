@@ -16,7 +16,7 @@ class UserData extends Seeder
         $user = [
             [
                 'name' => 'admin',
-                'username' => 'Administrator',
+                'username' => 'admin',
                 'password' => bcrypt('12345'),
                 'level' => 1,
                 'email' => 'admin@gmail.com'
@@ -25,14 +25,14 @@ class UserData extends Seeder
                 'name' => 'Owner',
                 'username' => 'Owner',
                 'password' => bcrypt('12345'),
-                'level' => 1,
+                'level' => 2,
                 'email' => 'owner@gmail.com'
             ],
             [
                 'name' => 'kasir',
                 'username' => 'kasir',
                 'password' => bcrypt('12345'),
-                'level' => 1,
+                'level' => 3,
                 'email' => 'kasir@gmail.com'
             ],
         ];

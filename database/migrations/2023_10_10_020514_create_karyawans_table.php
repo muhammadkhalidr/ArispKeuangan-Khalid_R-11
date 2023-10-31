@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('alamat', 250);
             $table->string('no_hp', 13);
             $table->string('email', 50);
-            $table->string('foto', 20)->nullable();
+            $table->string('foto', 255)->nullable();
             $table->timestamps();
         });
     }
