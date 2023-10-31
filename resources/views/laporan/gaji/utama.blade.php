@@ -50,8 +50,8 @@
             success: function(data) {
                 // Datatables
                 var i = 1;
-                $('#records3').DataTable({
-                    "data": data.gajis,
+                $('#lgaji').DataTable({
+                    "data": data.gajise,
                     // buttons
                     "dom": "<'row'<'col-sm-12 col-md-4'l><'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f>>" +
                         "<'row'<'col-sm-12'tr>>" +
@@ -93,9 +93,9 @@
         var start_date = $("#start_date").val();
         var end_date = $("#end_date").val();
         if (start_date == "" || end_date == "") {
-            alert("Cari dulu tanggal nya");
+            alert("Cari dulu tanggal nysssa");
         } else {
-            $('#records3').DataTable().destroy();
+            $('#lgaji').DataTable().destroy();
             fetch(start_date, end_date);
         }
     });
@@ -105,7 +105,7 @@
         e.preventDefault();
         $("#start_date").val(''); // empty value
         $("#end_date").val('');
-        $('#records3').DataTable().destroy();
+        $('#lgaji').DataTable().destroy();
         fetch();
     });
 </script>

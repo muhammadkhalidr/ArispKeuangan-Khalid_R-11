@@ -12,12 +12,12 @@ class CetakLaporanGajiController extends Controller
     {
 
         return view('laporan.gaji.cetak', [
-            'title' => 'Laporan Gaji Karyawan',
+            'title' => 'Laporan Gaji',
             'breadcrumb' => 'Laporan',
         ]);
     }
 
-    public function records_gaji(Request $request)
+    public function laporan_Gaji(Request $request)
     {
         if ($request->ajax()) {
 
@@ -27,16 +27,16 @@ class CetakLaporanGajiController extends Controller
                 $end_date = Carbon::parse($request->input('end_date'));
 
                 if ($end_date->greaterThan($start_date)) {
-                    $gajis = GajiKaryawan::whereBetween('created_at', [$start_date, $end_date])->get();
+                    $gajise = GajiKaryawan::whereBetween('created_at', [$start_date, $end_date])->get();
                 } else {
-                    $gajis = GajiKaryawan::latest()->get();
+                    $gajise = GajiKaryawan::latest()->get();
                 }
             } else {
-                $gajis = GajiKaryawan::latest()->get();
+                $gajise = GajiKaryawan::latest()->get();
             }
 
             return response()->json([
-                'gajis' => $gajis
+                'gajise' => $gajise
             ]);
         } else {
             abort(403);

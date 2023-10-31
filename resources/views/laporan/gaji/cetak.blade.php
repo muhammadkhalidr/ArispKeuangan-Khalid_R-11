@@ -1,4 +1,4 @@
-@extends('laporan.pembelian.utama')
+@extends('laporan.gaji.utama')
 
 @section('content')
     <div class="container my-5">
@@ -38,7 +38,7 @@
                     <div class="col-md-12">
                         <!-- Table -->
                         <div class="table-responsive">
-                            <table class="table table-borderless display nowrap" id="records3" style="width:100%">
+                            <table class="table table-borderless display nowrap" id="lgaji" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>No</th>

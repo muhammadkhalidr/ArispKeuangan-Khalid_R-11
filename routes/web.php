@@ -109,7 +109,7 @@ Route::get('laporan/pembelian', [CetakLaporanPembelianController::class, 'index'
 Route::get('laporan/pembelian/records', [CetakLaporanPembelianController::class, 'records_pembelian'])->name('laporan/pembelian/records');
 
 Route::get('laporan/gaji', [CetakLaporanGajiController::class, 'index'])->name('laporan/gaji');
-Route::get('laporan/gaji/records', [CetakLaporanGajiController::class, 'records_gaji'])->name('laporan/gaji/records');
+Route::get('laporan/gaji/records', [CetakLaporanGajiController::class, 'laporan_Gaji'])->name('laporan/gaji/records');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 // 404
 Route::get('{any}', function () {
