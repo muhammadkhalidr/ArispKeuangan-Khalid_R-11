@@ -189,6 +189,7 @@
             <div class="modal-body">
                 <form action="{{ url('hutang') }}" method="POST">
                     @csrf
+                    <input type="hidden"name="id_generate">
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nama</label>
                         <div class="col-sm-10">

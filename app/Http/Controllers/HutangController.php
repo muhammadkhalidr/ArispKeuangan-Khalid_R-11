@@ -28,29 +28,32 @@ class HutangController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreHutangRequest $request)
     {
         $validated = $request->validated();
 
+        $hutangBaru = Hutang::latest('id_hutang')->first();
+
+        if ($hutangBaru) {
+            $idLama = $hutangBaru->id_generate;
+            $idNumber = (int)substr($idLama, 2) + 1;
+            $idBaru = 'H-' . str_pad($idNumber, 3, '0', STR_PAD_LEFT);
+        } else {
+            $idBaru = 'H-001';
+        }
+
         $hutang = new Hutang;
 
+        $hutang->id_generate = $idBaru;
         $hutang->nama = $request->nama;
         $hutang->jumlah = $request->jumlah;
         $hutang->total = $request->total;
         $hutang->save();
 
         $kasMasuk = new KasMasuk;
-
+        $kasMasuk->id_generate = $idBaru;
         $kasMasuk->keterangan = "Hutang " . $request->nama;
         $kasMasuk->pengeluaran = $request->total;
         $kasMasuk->save();
@@ -58,21 +61,13 @@ class HutangController extends Controller
         return redirect('hutang')->with('msg', 'Data Berhasil Ditambahkan!');
     }
 
+
     /**
      * Display the specified resource.
      */
-    public function show($id_hutang)
+    public function show()
     {
 
-        // $hutang = Hutang::findOrFail($id_hutang);
-
-        // return view('hutang.index')->with([
-        //     'id_hutang' => $id_hutang,
-        //     'nama' => $hutang->nama,
-        //     'jumlah' => $hutang->jumlah,
-        //     'total' => $hutang->total,
-
-        // ]);
     }
 
     public function bayarHutang(Request $request)
@@ -87,7 +82,6 @@ class HutangController extends Controller
 
         $hutang = Hutang::findOrFail($id_hutang);
 
-        // Mengambil total hutang sebelumnya
         $total_hutang_sebelumnya = $hutang->total;
 
         if ($jml_bayar > $total_hutang_sebelumnya) {
@@ -97,19 +91,15 @@ class HutangController extends Controller
         DB::beginTransaction();
 
         try {
-            // Mengurangi total hutang dengan jumlah pembayaran
             $hutang->total = $total_hutang_sebelumnya - $jml_bayar;
             $hutang->save();
 
-            // Mencari entri kas_masuks yang terkait dengan hutang ini
             $kasMasuk = KasMasuk::where('keterangan', 'Hutang ' . $hutang->nama)->first();
 
             if ($kasMasuk) {
-                // Jika entri ditemukan, update jumlah pemasukan (representasi pembayaran hutang)
                 $kasMasuk->pemasukan += $jml_bayar;
                 $kasMasuk->save();
             } else {
-                // Jika entri tidak ditemukan, tambahkan entri baru ke tabel kas_masuks
                 $newKasMasuk = new KasMasuk();
                 $newKasMasuk->keterangan = 'Hutang ' . $hutang->nama;
                 $newKasMasuk->pemasukan = $jml_bayar;
@@ -143,10 +133,10 @@ class HutangController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id_hutang)
+    public function destroy($id_generate)
     {
-        $hutang = Hutang::findOrFail($id_hutang);
-        $kasMasuk = KasMasuk::where('pengeluaran', $hutang->total)->first();
+        $hutang = Hutang::findOrFail($id_generate);
+        $kasMasuk = KasMasuk::where('id_generate', $hutang->id_generate)->first();
 
         $hutang->delete();
         $kasMasuk->delete();

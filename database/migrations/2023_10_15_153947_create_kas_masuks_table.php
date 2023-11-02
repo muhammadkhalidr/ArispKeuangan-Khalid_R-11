@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('kas_masuks', function (Blueprint $table) {
             $table->id('id')->autoIncrement();
-            $table->integer('id_generate')->nullable();
+            $table->string('id_generate')->nullable();
             $table->integer('no_reff')->nullable();
             $table->string('keterangan')->nullable();
             $table->integer('pemasukan')->nullable();
