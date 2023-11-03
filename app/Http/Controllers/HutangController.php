@@ -24,6 +24,7 @@ class HutangController extends Controller
             'title' => 'Hutang',
             'breadcrumb' => 'Hutang',
             'hutangs' => $data,
+            'user' => $user,
         ]);
     }
 
