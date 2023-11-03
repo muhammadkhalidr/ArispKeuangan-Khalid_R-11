@@ -16,6 +16,7 @@ use App\Http\Controllers\CetakLaporanGajiController;
 use App\Http\Controllers\CetakLaporanPembelianController;
 use App\Http\Controllers\GajiKaryawanController;
 use App\Http\Controllers\HutangController;
+use App\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +89,11 @@ Route::group(['middleware' => ['auth']], function () {
         // Untuk Profile
         Route::resource('profile', ProfileController::class);
         Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+        // Untuk Setting
+        Route::resource('setting', SettingController::class);
+        Route::post('/setting', [SettingController::class, 'editLogo']);
+
     });
 
     // Akses Untuk Owner

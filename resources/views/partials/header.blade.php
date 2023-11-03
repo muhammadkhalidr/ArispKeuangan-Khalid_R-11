@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>{{ $title }}</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/') }}assets/images/favicon.png">
+    @foreach ($logo as $item)
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/settings/{{ $item->favicon }}">
+    @endforeach
     <!-- Custom Stylesheet -->
     <link href="{{ asset('/') }}assets/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="{{ asset('/') }}assets/css/style.css" rel="stylesheet">
@@ -41,12 +43,14 @@
         <div class="nav-header">
             <div class="brand-logo">
                 <a href="{{ asset('/') }}">
-                    <b class="logo-abbr"><img src="{{ asset('/') }}assets/images/aneka-1.png" alt=""> </b>
-                    <span class="logo-compact"><img src="{{ asset('/') }}assets/images/aneka.png"
+                    @foreach ($logo as $item)  
+                    <b class="logo-abbr"><img src="assets/images/settings/{{ $item->logo }}" alt=""> </b>
+                    <span class="logo-compact"><img src="assets/images/settings/{{ $item->logo }}"
                             alt=""></span>
                     <span class="brand-title">
-                        <img src="{{ asset('/') }}assets/images/aneka.png" alt="" width="120">
+                        <img src="assets/images/settings/{{ $item->logo }}" alt="" width="120">
                     </span>
+                    @endforeach
                 </a>
             </div>
         </div>
@@ -83,6 +87,9 @@
                                         <li>
                                             <a href="{{ url('profile') }}"><i class="icon-user"></i>
                                                 <span>Profile</span></a>
+                                                <hr class="my-2">
+                                            <a href="{{ url('setting') }}"><i class="fa fa-cogs"></i>
+                                                <span>Setting</span></a>
                                         </li>
                                         <hr class="my-2">
                                         <li><a href="{{ url('logout') }}"><i class="icon-key"></i>

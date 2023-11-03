@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Login</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/') }}assets/images/favicon.png">
+    @foreach ($logo as $item)
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/settings/{{ $item->favicon }}">
+    @endforeach
     <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
     <link href="{{ asset('/') }}assets/css/style.css" rel="stylesheet">
 
@@ -37,8 +39,10 @@
                     <div class="form-input-content">
                         <div class="card login-form mb-0">
                             <div class="card-body pt-5">
-                                <img src="{{ asset('/') }}assets/images/logo-warna.png" alt="AnekaKreasi"
-                                    class="logo-warna">
+                                @foreach ($logo as $item)     
+                                <img src="assets/images/settings/{{ $item->logo }}" alt="{{ $item->perusahaan }}"
+                                    class="logo-login">
+                                @endforeach
                                 <a class="text-center" href="{{ asset('/') }}">
                                     <h4>Login</h4>
                                 </a>

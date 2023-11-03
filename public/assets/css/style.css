@@ -14719,4 +14719,18 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     #chart_keuangan {
       padding: 20px;
     }
+
+    .logo-settings{
+      background-color: #fbe4d0;
+      padding: 10px;
+      width: 200px;
+      height: auto;
+    }
+    .logo-login {
+      display: flex;
+      margin-inline: auto;
+      width: 200px;
+      height: auto;
+      margin-bottom: 20px;
+    }
 /*# sourceMappingURL=style.css.map */

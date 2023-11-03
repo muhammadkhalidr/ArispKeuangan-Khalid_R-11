@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\setting;
 
 class LoginController extends Controller
 {
     public function index()
     {
+        $logo = setting::all();
         if (Auth::user()) {
             // if ($user->level = '1') {
             //     return redirect()->intended('orderan');
@@ -20,7 +22,9 @@ class LoginController extends Controller
             return redirect()->intended('home');
         }
 
-        return view('pages.login');
+        return view('pages.login' , [
+            'logo' => $logo,
+        ]);
     }
 
     public function proses(Request $request)
