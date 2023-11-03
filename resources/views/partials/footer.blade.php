@@ -1,12 +1,11 @@
 <!--**********************************
             Footer start
         ***********************************-->
-<div class="footer">
-    <div class="copyright">
-        <p>Copyright &copy; Developed by <a href="https://khalidr.my.id">Khalid R</a>
-            {{ date('Y') }}</p>
-    </div>
-</div>
+        <div class="footer">
+            <div class="copyright">
+                {!! env('FOOTER_NAME', "<a href='https://khalidr.my.id'>Developed by. Khalid R</a>") !!} 
+            </div>
+        </div>
 <!--**********************************
             Footer end
         ***********************************-->
@@ -31,13 +30,12 @@
 <script src="{{ asset('/') }}assets/plugins/tables/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('/') }}assets/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
 <script src="{{ asset('/') }}assets/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+<script src="{{ asset('/') }}assets/js/plugins-init/jfsc.js"></script>
 
 <script src="{{ asset('/') }}assets/js/hitung.js"></script>
 <script src="{{ asset('/') }}assets/js/hitungGaji.js"></script>
 <script src="{{ asset('/') }}assets/js/hitungPengeluaran.js"></script>
-{{-- <script src="{{ asset('/') }}assets/js/daterangepicker.js"></script> --}}
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
 </body>
 
 </html>
