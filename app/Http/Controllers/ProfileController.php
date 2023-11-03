@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Profile;
 use App\Http\Requests\StoreProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -16,14 +18,14 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $datas = User::all();
-
+        $data = User::where('id', $user->id)->get();
         return view('profile.index', [
             'title' => 'Profile',
             'breadcrumb' => 'Profile',
             'user' => $user,
-            'users' => $datas,
+            'data' => $data,
         ]);
+
     }
 
     /**
@@ -61,9 +63,24 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProfileRequest $request, Profile $profile)
+    public function update(Request $request)
     {
-        //
+        $user = Auth::user();
+
+        $validatedData = $request->validate([
+            'passwordLama' => 'required',
+            'passwordBaru' => 'required|min:4',
+            'konfirmasiPassword' => 'required|same:passwordBaru',
+        ]);
+
+        if (!Hash::check($request->passwordLama, $user->password)) {
+            return back()->with('error', 'Password Lama Salah');
+        }
+
+        $user->password = Hash::make($request->passwordBaru);
+        $user->save();
+
+        return redirect()->route('profile.index')->with('success', 'Password berhasil diubah');
     }
 
     /**

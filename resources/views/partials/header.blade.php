@@ -77,13 +77,13 @@
                                 <div class="dropdown-content-body">
                                     <ul>
                                         <li>
-                                            {{-- <span>{{ $user->level == 1 ? 'Administrator' : 'Owner' }}</span> --}}
+                                            <span>{{ $user->level == 1 ? 'Administrator' : 'Owner' }}</span>
                                             {{-- <span>{{ $user->name }}</span> --}}
                                         </li>
-                                        {{-- <li>
+                                        <li>
                                             <a href="{{ url('profile') }}"><i class="icon-user"></i>
                                                 <span>Profile</span></a>
-                                        </li> --}}
+                                        </li>
                                         <hr class="my-2">
                                         <li><a href="{{ url('logout') }}"><i class="icon-key"></i>
                                                 <span>Logout</span></a>

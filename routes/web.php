@@ -87,6 +87,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         // Untuk Profile
         Route::resource('profile', ProfileController::class);
+        Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     });
 
     // Akses Untuk Owner
