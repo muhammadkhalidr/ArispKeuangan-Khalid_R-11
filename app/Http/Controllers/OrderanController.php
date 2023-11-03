@@ -82,13 +82,14 @@ class OrderanController extends Controller
      */
     public function show($id_keuangan)
     {
-        $orderan = Orderan::find($id_keuangan);
+        $user = Auth::user();
+        $orderan = Orderan::findOrFail($id_keuangan);
 
-        if (!$orderan) {
-            return redirect('orderan')->with('error', 'Data not found.');
-        }
-
-        return view('orderan.edit', data: ['title' => 'Edit Orderan', 'breadcrumb' => 'Data Orderan'])->with([
+        return view('orderan.edit', data: [
+            'title' => 'Edit Orderan',
+            'breadcrumb' => 'Data Orderan',
+            'user' => $user,
+            ])->with([
             'txtid' => $id_keuangan,
             'txtnama' => $orderan->nama_pemesan,
             'txtbarang' => $orderan->nama_barang,

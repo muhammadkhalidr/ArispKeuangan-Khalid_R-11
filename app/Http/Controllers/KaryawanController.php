@@ -68,9 +68,13 @@ class KaryawanController extends Controller
      */
     public function show($id_karyawan)
     {
+        $user = Auth::user();
         $karyawan = Karyawan::find($id_karyawan);
 
-        return view('karyawan.edit', ['title' => 'Edit Karyawan'])->with([
+        return view('karyawan.edit', [
+            'title' => 'Edit Karyawan',
+            'user' => $user,
+            ])->with([
             'txtid' => $id_karyawan,
             'txtnama' => $karyawan->nama_karyawan,
             'txtalamat' => $karyawan->alamat,

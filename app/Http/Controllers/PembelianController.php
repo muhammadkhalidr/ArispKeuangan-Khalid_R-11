@@ -91,10 +91,14 @@ class PembelianController extends Controller
      */
     public function show($id_pembelian)
     {
-
+        $user = Auth::user();
         $pembelian = Pembelian::findOrFail($id_pembelian);
 
-        return view('pembelian.edit', ['title' => 'Edit Pembelian', 'breadcrumb' => 'Pembelian'])->with([
+        return view('pembelian.edit', [
+            'title' => 'Edit Pembelian',
+            'breadcrumb' => 'Pembelian',
+            'user' => $user,
+            ])->with([
             'txtid' => $id_pembelian,
             'txtbahan' => $pembelian->bahan,
             'txtjenis' => $pembelian->jenis,
