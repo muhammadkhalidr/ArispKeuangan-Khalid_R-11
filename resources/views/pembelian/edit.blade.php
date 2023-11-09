@@ -26,7 +26,8 @@
                                 onclick="window.location='{{ url('pembelian') }}'" style="cursor: pointer"></i> Tambah
                             Data Pembelian</h2>
                         <div class="form-validation">
-                            <form class="form-valide" action="{{ url('pembelian') }}" method="POST">
+                            <form class="form-valide" action="{{ url('pembelian/' . $txtid) }}" method="POST">
+                                @method('PUT')
                                 @csrf
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="txtid">No Faktur<span

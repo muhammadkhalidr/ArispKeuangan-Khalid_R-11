@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('orderans', function (Blueprint $table) {
             $table->id('id_keuangan')->autoIncrement();
+            $table->string('id_generate')->nullable();
             $table->string('nama_barang');
             $table->bigInteger('harga_barang');
             $table->bigInteger('jumlah_barang');

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Pembelian;
 use App\Http\Requests\StorePembelianRequest;
 use App\Http\Requests\UpdatePembelianRequest;
-use App\Models\DetailPembelian;
 use App\Models\KasMasuk;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,13 +39,6 @@ class PembelianController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -55,8 +47,19 @@ class PembelianController extends Controller
     {
         $validate = $request->validated();
 
+        $pembelianBaru = Pembelian::latest('id_pembelian')->first();
+
+        if ($pembelianBaru) {
+            $idLama = $pembelianBaru->id_generate;
+            $idNumber = (int)substr($idLama, 2) + 1;
+            $idBaru = 'P-' . str_pad($idNumber, 3, '0', STR_PAD_LEFT);
+        } else {
+            $idBaru = 'P-001';
+        }
+
         $pembelian = new Pembelian;
         $pembelian->id_pembelian = $request->txtid;
+        $pembelian->id_generate = $idBaru;
         $pembelian->bahan = $request->txtbahan;
         $pembelian->jenis = $request->txtjenis;
         $pembelian->jumlah = $request->txtjumlah;
@@ -64,20 +67,17 @@ class PembelianController extends Controller
         $pembelian->total = $request->txttotal;
         $pembelian->uang_muka = $request->txtdp;
         $pembelian->sisa_pembayaran = $request->txtsisa;
+
+        // Cek saldo kas masuk
+        $saldoKasMasuk = KasMasuk::sum('pemasukan');
+        if ($saldoKasMasuk && $saldoKasMasuk < $pembelian->total) {
+            return redirect()->back()->with('error', 'Saldo tidak cukup!');
+        }
+
         $pembelian->save();
 
-        $detailPembelian = new DetailPembelian;
-        $detailPembelian->id_pembelian = $request->txtid;
-        $detailPembelian->bahan = $request->txtbahan;
-        $detailPembelian->jenis = $request->txtjenis;
-        $detailPembelian->jumlah = $request->txtjumlah;
-        $detailPembelian->satuan = $request->txtsatuan;
-        $detailPembelian->total = $request->txttotal;
-        $detailPembelian->uang_muka = $request->txtdp;
-        $detailPembelian->sisa_pembayaran = $request->txtsisa;
-        $detailPembelian->save();
-
         $kasMasuk = new KasMasuk;
+        $kasMasuk->id_generate = $idBaru;
         $kasMasuk->keterangan = $request->txtbahan;
         $kasMasuk->pengeluaran = $request->txttotal;
         $kasMasuk->save();
@@ -98,7 +98,7 @@ class PembelianController extends Controller
             'title' => 'Edit Pembelian',
             'breadcrumb' => 'Pembelian',
             'user' => $user,
-            ])->with([
+        ])->with([
             'txtid' => $id_pembelian,
             'txtbahan' => $pembelian->bahan,
             'txtjenis' => $pembelian->jenis,
@@ -116,7 +116,6 @@ class PembelianController extends Controller
     public function update(UpdatePembelianRequest $request, $id_pembelian)
     {
         $data = Pembelian::findOrFail($id_pembelian);
-
         $data->id_pembelian = $request->txtid;
         $data->bahan = $request->txtbahan;
         $data->jenis = $request->txtjenis;
@@ -127,22 +126,36 @@ class PembelianController extends Controller
         $data->sisa_pembayaran = $request->txtsisa;
         $data->save();
 
+        $kasMasuk = KasMasuk::where('id_generate', $data->id_generate)->first();
+        if ($kasMasuk) {
+            $kasMasuk->update([
+                'pengeluaran' => $data->total,
+                'keterangan' => $data->bahan,
+            ]);
+        }
+
         return redirect('pembelian')->with('msg', 'Data Berhasil Di-update!');
     }
+
+
+
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id_pembelian)
+    public function destroy($id_generate)
     {
-        $datas = Pembelian::findOrFail($id_pembelian);
-        $kasMasuk = KasMasuk::where('pengeluaran', $datas->total)->first();
-
+        $datas = Pembelian::findOrFail($id_generate);
+        $kasMasuk = KasMasuk::where('id_generate', $datas->id_generate)->get();
         $datas->delete();
-        $kasMasuk->delete();
 
+        foreach ($kasMasuk as $kas) {
+            $kas->delete();
+        }
         return redirect('pembelian')->with('msg', 'Data Berhasil Di-hapus!');
     }
+
 
     public function printFaktur($id_pembelian)
     {

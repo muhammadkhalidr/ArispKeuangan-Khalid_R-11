@@ -14,4 +14,9 @@ class Pengeluaran extends Model
 
     public $incrementing = false;
     public $timestamps = true;
+
+    public function kasMasuk()
+    {
+        return $this->hasOne(KasMasuk::class, 'id_generate', 'total');
+    }
 }

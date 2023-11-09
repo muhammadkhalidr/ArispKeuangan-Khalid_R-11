@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('hutangs', function (Blueprint $table) {
             $table->integer('id_hutang')->autoIncrement();
+            $table->string('id_generate')->nullable();
             $table->string('nama')->nullable();
             $table->bigInteger('jumlah')->nullable();
             $table->bigInteger('total')->nullable();

@@ -52,20 +52,42 @@ class PengeluaranController extends Controller
     {
         $validate = $request->validated();
 
+        $pengeluaranBaru = Pengeluaran::latest('id_pengeluaran')->first();
+
+        if ($pengeluaranBaru) {
+            $idLama = $pengeluaranBaru->id_generate;
+            $idNumber = (int)substr($idLama, 2) + 1;
+            $idBaru = 'K-' . str_pad($idNumber, 3, '0', STR_PAD_LEFT);
+        } else {
+            $idBaru = 'K-001';
+        }
+
         $pengeluaran = new Pengeluaran;
         $kasMasuk = new KasMasuk;
+        $pengeluaran->id_pengeluaran = $request->txtid;
+        $pengeluaran->id_generate = $idBaru;
         $pengeluaran->keterangan = $request->txtket;
         $pengeluaran->jumlah = $request->txtjumlah;
         $pengeluaran->harga = $request->txtharga;
         $pengeluaran->total = $request->txttotal;
+
+        // Cek saldo kas masuk
+        $saldoKasMasuk = KasMasuk::sum('pemasukan');
+        if ($saldoKasMasuk && $saldoKasMasuk < $pengeluaran->total) {
+            return redirect()->back()->with('error', 'Saldo tidak cukup!');
+        }
+
         $pengeluaran->save();
 
+        $kasMasuk->id_generate = $idBaru;
         $kasMasuk->keterangan = $request->txtket;
-        $kasMasuk->pengeluaran = $request->txttotal;
+        $kasMasuk->pengeluaran = $pengeluaran->total;
         $kasMasuk->save();
 
         return redirect('pengeluaran')->with('msg', 'Data Berhasil Ditambahkan!');
     }
+
+
 
     /**
      * Display the specified resource.
@@ -94,10 +116,10 @@ class PengeluaranController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id_pengeluaran)
+    public function destroy($id_generate)
     {
-        $pengeluaran = Pengeluaran::findOrFail($id_pengeluaran);
-        $kasMasuk = KasMasuk::where('pengeluaran', $pengeluaran->total)->first();
+        $pengeluaran = Pengeluaran::findOrFail($id_generate);
+        $kasMasuk = KasMasuk::where('id_generate', $pengeluaran->id_generate)->first();
 
         $pengeluaran->delete();
         $kasMasuk->delete();

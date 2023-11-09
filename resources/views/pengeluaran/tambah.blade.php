@@ -22,12 +22,31 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="pesan mt-2">
+                            @if (session('error'))
+                                <div class="alert alert-warning alert-dismissible fade show">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span>
+                                    </button> {{ session('error') }}
+                                </div>
+                            @endif
+                        </div>
                         <h2 class="card-title mb-4"> <i class="fa fa-arrow-left"
                                 onclick="window.location='{{ url('pengeluaran') }}'" style="cursor: pointer"></i> Tambah
                             Data Pengeluaran</h2>
                         <div class="form-validation">
                             <form class="form-valide" action="{{ url('pengeluaran') }}" method="POST">
                                 @csrf
+                                <input type="hidden" name="id_generate">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="txtid">No Pengeluaran<span
+                                            class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" id="txtid" name="txtid"
+                                            value="{{ old('txtid') }}">
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="txtket">Keterangan<span
                                             class="text-danger">*</span>

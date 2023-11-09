@@ -22,6 +22,15 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Data Hutang</h4>
+                        <div class="pesan mt-2">
+                            @if (session('error'))
+                                <div class="alert alert-warning alert-dismissible fade show">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span>
+                                    </button> {{ session('error') }}
+                                </div>
+                            @endif
+                        </div>
                         @if (auth()->check())
                             @if (auth()->user()->level == 1)
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -189,7 +198,7 @@
             <div class="modal-body">
                 <form action="{{ url('hutang') }}" method="POST">
                     @csrf
-                    <input type="hidden"name="id_generate">
+                    <input type="hidden" name="id_generate">
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nama</label>
                         <div class="col-sm-10">

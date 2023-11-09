@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('alamat', 255)->nullable();
             $table->string('email', 50)->nullable();
             $table->string('phone', 14)->nullable();
-            $table->string('instagram',50)->nullable();
+            $table->string('instagram', 50)->nullable();
             $table->string('logo', 255)->nullable();
+            $table->string('favicon', 255)->nullable();
             $table->timestamps();
         });
     }

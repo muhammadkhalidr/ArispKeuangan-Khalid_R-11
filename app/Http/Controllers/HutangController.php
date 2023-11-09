@@ -6,6 +6,7 @@ use App\Models\Hutang;
 use App\Http\Requests\StoreHutangRequest;
 use App\Http\Requests\UpdateHutangRequest;
 use App\Models\KasMasuk;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -51,16 +52,28 @@ class HutangController extends Controller
         $hutang->nama = $request->nama;
         $hutang->jumlah = $request->jumlah;
         $hutang->total = $request->total;
-        $hutang->save();
 
-        $kasMasuk = new KasMasuk;
-        $kasMasuk->id_generate = $idBaru;
-        $kasMasuk->keterangan = "Hutang " . $request->nama;
-        $kasMasuk->pengeluaran = $request->total;
-        $kasMasuk->save();
+        try {
+            // Cek saldo kas masuk
+            $saldoKasMasuk = KasMasuk::sum('pemasukan');
+            if ($saldoKasMasuk && $saldoKasMasuk < $hutang->total) {
+                return redirect('hutang')->with('error', 'Saldo tidak cukup!');
+            }
+
+            $hutang->save();
+
+            $kasMasuk = new KasMasuk;
+            $kasMasuk->id_generate = $idBaru;
+            $kasMasuk->keterangan = "Hutang " . $request->nama;
+            $kasMasuk->pengeluaran = $request->total;
+            $kasMasuk->save();
+        } catch (Exception $e) {
+            return redirect('hutang')->with('error', $e->getMessage());
+        }
 
         return redirect('hutang')->with('msg', 'Data Berhasil Ditambahkan!');
     }
+
 
 
     /**
@@ -68,7 +81,6 @@ class HutangController extends Controller
      */
     public function show()
     {
-
     }
 
     public function bayarHutang(Request $request)

@@ -41,12 +41,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Data Pembelian</h4>
-                        {{-- <button type="button" class="btn btn-primary"
+                        <button type="button" class="btn btn-primary"
                             onclick="window.location='{{ url('pembelianbaru') }}'">
                             <i class="fa fa-plus-circle"></i> Tambah Data Baru
-                        </button> --}}
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target=".bd-pembelian-modal-lg"> <i class="fa fa-plus"></i> Tambah Data</button>
+                        </button>
+                        {{-- <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target=".bd-pembelian-modal-lg"> <i class="fa fa-plus"></i> Tambah Data</button> --}}
                         <div class="pesan mt-2">
                             @if (session('msg'))
                                 <div class="alert alert-primary alert-dismissible fade show">

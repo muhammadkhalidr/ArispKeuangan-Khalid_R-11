@@ -22,6 +22,15 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="pesan mt-2">
+                            @if (session('error'))
+                                <div class="alert alert-warning alert-dismissible fade show">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span>
+                                    </button> {{ session('error') }}
+                                </div>
+                            @endif
+                        </div>
                         <h2 class="card-title mb-4"> <i class="fa fa-arrow-left"
                                 onclick="window.location='{{ url('pembelian') }}'" style="cursor: pointer"></i> Tambah
                             Data Pembelian</h2>

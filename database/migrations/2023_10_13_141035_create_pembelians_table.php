@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pembelians', function (Blueprint $table) {
-            // $table->id();
-            $table->string('id_pembelian')->autoIncrement();
+            $table->bigInteger('id_pembelian')->nullable();
+            $table->string('id_generate')->nullable();
             $table->string('bahan')->nullable();
             $table->string('jenis')->nullable();
             $table->bigInteger('jumlah')->nullable();

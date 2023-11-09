@@ -26,6 +26,7 @@ class PermissionSeeder extends Seeder
             'orderan.data',
             'pengeluaran.data',
             'pembelian.data',
+            'pembelian.edit',
         ];
 
         foreach ($permissions as $permission) {

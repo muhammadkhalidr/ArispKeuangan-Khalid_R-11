@@ -14,4 +14,10 @@ class KasMasuk extends Model
 
     public $incrementing = false;
     public $timestamps = true;
+
+    protected $fillable = [
+        'id_generate',
+        'pengeluaran',
+        'keterangan',
+    ];
 }
