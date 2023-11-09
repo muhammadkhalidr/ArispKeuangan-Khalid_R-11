@@ -93,7 +93,6 @@ Route::group(['middleware' => ['auth']], function () {
         // Untuk Setting
         Route::resource('setting', SettingController::class);
         Route::post('/setting', [SettingController::class, 'editLogo']);
-
     });
 
     // Akses Untuk Owner

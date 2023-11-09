@@ -57,28 +57,28 @@ class SettingController extends Controller
         $data = setting::first();
         $logoUpdated = false;
         $faviconUpdated = false;
-    
+
         if ($request->hasFile('logo')) {
             $foto_file = $request->file('logo');
             $logo_name = $foto_file->hashName();
             $foto_file->move(public_path('assets/images/settings'), $logo_name);
-    
+
             $data->logo = $logo_name;
             $logoUpdated = true;
         }
-    
+
         if ($request->hasFile('favicon')) {
             $favicon_file = $request->file('favicon');
             $favicon_name = $favicon_file->hashName();
             $favicon_file->move(public_path('assets/images/settings'), $favicon_name);
-    
+
             $data->favicon = $favicon_name;
             $faviconUpdated = true;
         }
-    
+
         if ($logoUpdated || $faviconUpdated) {
             $data->save();
-    
+
             if ($logoUpdated && $faviconUpdated) {
                 return redirect('setting')->with('msg', 'Logo dan Favicon Berhasil Diperbarui!');
             } else if ($logoUpdated) {
@@ -87,12 +87,12 @@ class SettingController extends Controller
                 return redirect('setting')->with('msg', 'Favicon Berhasil Diperbarui!');
             }
         }
-    
+
         return redirect('setting')->with('msg', 'Tidak ada file yang dipilih.');
     }
-    
-    
-    
+
+
+
 
     /**
      * Update the specified resource in storage.
@@ -100,14 +100,14 @@ class SettingController extends Controller
     public function update(Request $request, $id_setting)
     {
         $data = setting::findOrFail($id_setting);
-    
+
         $data->perusahaan = $request->nama_perusahaan;
         $data->email = $request->email;
         $data->alamat = $request->alamat;
         $data->phone = $request->phone;
         $data->instagram = $request->ig;
         $data->save();
-    
+
         return redirect('setting')->with('msg', 'Data Berhasil Di-perbarui!');
     }
 

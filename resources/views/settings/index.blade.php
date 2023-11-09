@@ -13,41 +13,46 @@
                         <div class="pesan mt2">
                             @if (session('msg'))
                                 <div class="alert alert-success">
-                                    {{ session('msg')}}
+                                    {{ session('msg') }}
                                 </div>
                             @endif
                         </div>
                         @foreach ($data as $item)
-                        <form action="{{ route('setting.update', $item->id_setting) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" value="{{ $item->id_setting }}" name="id_setting">
-                            <div class="form-row">
-                              <div class="form-group col-md-6">
-                                <label for="perusahaan">Nama Perusahaan</label>
-                                <input type="text" class="form-control" id="perusahaan" name="nama_perusahaan" value="{{ $item->perusahaan }}">
-                              </div>
-                              <div class="form-group col-md-6">
-                                <label for="email">Email</label>
-                                <input type="text" class="form-control" id="email" name="email" value="{{ $item->email }}">
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label for="alamat">Alamat</label>
-                              <input type="text" class="form-control" id="alamat" name="alamat" value="{{ $item->alamat }}">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                  <label for="phone">No Handphone</label>
-                                  <input type="text" class="form-control" id="phone" name="phone" value="{{ $item->phone }}">
+                            <form action="{{ route('setting.update', $item->id_setting) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" value="{{ $item->id_setting }}" name="id_setting">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="perusahaan">Nama Perusahaan</label>
+                                        <input type="text" class="form-control" id="perusahaan" name="nama_perusahaan"
+                                            value="{{ $item->perusahaan }}">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="email">Email</label>
+                                        <input type="text" class="form-control" id="email" name="email"
+                                            value="{{ $item->email }}">
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                  <label for="instagram">Instagram</label>
-                                  <input type="text" class="form-control" id="instagram" name="ig" value="{{ $item->instagram }}">
+                                <div class="form-group">
+                                    <label for="alamat">Alamat</label>
+                                    <input type="text" class="form-control" id="alamat" name="alamat"
+                                        value="{{ $item->alamat }}">
                                 </div>
-                              </div>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                          </form>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="phone">No Handphone</label>
+                                        <input type="text" class="form-control" id="phone" name="phone"
+                                            value="{{ $item->phone }}">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="instagram">Instagram</label>
+                                        <input type="text" class="form-control" id="instagram" name="ig"
+                                            value="{{ $item->instagram }}">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </form>
                         @endforeach
                     </div>
                 </div>
@@ -62,11 +67,13 @@
                             @csrf
                             <div class="form-group">
                                 <label for="logo">Logo</label>
-                                <input type="file" name="logo" class="form-control" id="logo" value="{{ $item->logo }}">
+                                <input type="file" name="logo" class="form-control" id="logo"
+                                    value="{{ $item->logo }}">
                             </div>
                             <div class="form-group">
                                 <label for="favicon">Favicon</label>
-                                <input type="file" name="favicon" class="form-control" id="favicon" value="{{ $item->favicon }}">
+                                <input type="file" name="favicon" class="form-control" id="favicon"
+                                    value="{{ $item->favicon }}">
                             </div>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </form>
@@ -78,14 +85,16 @@
                 <div class="card">
                     <div class="card-body">
                         @foreach ($data as $item)
-                        <div class="form-group col-md-6">
-                        <label for="">Logo</label>
-                        <img src="assets/images/settings/{{ $item->logo }}" alt="Logo" class="logo-settings form-control">
-                        </div>
-                        <div class="form-group col-md-6">
-                        <label for="faviocn">Favicon</label>
-                        <img src="assets/images/settings/{{ $item->favicon }}" alt="favicon" class="logo-settings form-control">
-                        </div>
+                            <div class="form-group col-md-6">
+                                <label for="">Logo</label>
+                                <img src="assets/images/settings/{{ $item->logo }}" alt="Logo"
+                                    class="logo-settings form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="faviocn">Favicon</label>
+                                <img src="assets/images/settings/{{ $item->favicon }}" alt="favicon"
+                                    class="logo-settings form-control">
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -93,6 +102,5 @@
         </div>
 
     </div>
-
 @endsection
 <!-- #/ container -->

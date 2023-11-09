@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pembelians', function (Blueprint $table) {
             // $table->id();
-            $table->string('id_pembelian');
+            $table->string('id_pembelian')->autoIncrement();
             $table->string('bahan')->nullable();
             $table->string('jenis')->nullable();
             $table->bigInteger('jumlah')->nullable();
