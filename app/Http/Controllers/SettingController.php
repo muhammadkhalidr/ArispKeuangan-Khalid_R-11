@@ -57,6 +57,7 @@ class SettingController extends Controller
         $data = setting::first();
         $logoUpdated = false;
         $faviconUpdated = false;
+        $logoLoginUpdate = false;
 
         if ($request->hasFile('logo')) {
             $foto_file = $request->file('logo');
@@ -76,15 +77,26 @@ class SettingController extends Controller
             $faviconUpdated = true;
         }
 
-        if ($logoUpdated || $faviconUpdated) {
+        if ($request->hasFile('logo_login')) {
+            $logo_login = $request->file('logo_login');
+            $logo_login_name = $logo_login->hashName();
+            $logo_login->move(public_path('assets/images/settings'), $logo_login_name);
+
+            $data->login_logo = $logo_login_name;
+            $logoLoginUpdate = true;
+        }
+
+        if ($logoUpdated || $faviconUpdated || $logoLoginUpdate) {
             $data->save();
 
-            if ($logoUpdated && $faviconUpdated) {
+            if ($logoUpdated && $faviconUpdated && $logoLoginUpdate) {
                 return redirect('setting')->with('msg', 'Logo dan Favicon Berhasil Diperbarui!');
             } else if ($logoUpdated) {
                 return redirect('setting')->with('msg', 'Logo Berhasil Diperbarui!');
-            } else {
+            } elseif ($faviconUpdated) {
                 return redirect('setting')->with('msg', 'Favicon Berhasil Diperbarui!');
+            } else {
+                return redirect('setting')->with('msg', 'Logo Login Berhasil Diperbarui!');
             }
         }
 

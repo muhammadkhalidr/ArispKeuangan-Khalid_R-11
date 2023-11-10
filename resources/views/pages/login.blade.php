@@ -5,10 +5,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Login</title>
+    <!-- PWA  -->
+    <meta name="theme-color" content="#6777ef" />
+    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
+    <title>Login - {{ env('APP_NAME') }}</title>
     <!-- Favicon icon -->
     @foreach ($logo as $item)
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/settings/{{ $item->favicon }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="assets/images/settings/{{ $item->favicon }}">
     @endforeach
     <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
     <link href="{{ asset('/') }}assets/css/style.css" rel="stylesheet">
@@ -39,9 +43,9 @@
                     <div class="form-input-content">
                         <div class="card login-form mb-0">
                             <div class="card-body pt-5">
-                                @foreach ($logo as $item)     
-                                <img src="assets/images/settings/{{ $item->logo }}" alt="{{ $item->perusahaan }}"
-                                    class="logo-login">
+                                @foreach ($logo as $item)
+                                    <img src="assets/images/settings/{{ $item->login_logo }}"
+                                        alt="{{ $item->perusahaan }}" class="logo-login">
                                 @endforeach
                                 <a class="text-center" href="{{ asset('/') }}">
                                     <h4>Login</h4>
@@ -97,6 +101,24 @@
     <script src="{{ asset('/') }}assets/js/settings.js"></script>
     <script src="{{ asset('/') }}assets/js/gleek.js"></script>
     <script src="{{ asset('/') }}assets/js/styleSwitcher.js"></script>
+
+    <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            // Register a service worker hosted at the root of the
+            // site using the default scope.
+            navigator.serviceWorker.register("/sw.js").then(
+                (registration) => {
+                    console.log("Service worker registration succeeded:", registration);
+                },
+                (error) => {
+                    console.error(`Service worker registration failed: ${error}`);
+                },
+            );
+        } else {
+            console.error("Service workers are not supported.");
+        }
+    </script>
 </body>
 
 </html>

@@ -14726,6 +14726,12 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
       width: 200px;
       height: auto;
     }
+    .favicon-settings{
+      background-color: #fbe4d0;
+      padding: 10px;
+      width: 50px;
+      height: auto;
+    }
     .logo-login {
       display: flex;
       margin-inline: auto;

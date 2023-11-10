@@ -23,6 +23,7 @@ class SettingSeeder extends Seeder
             'instagram' => 'khlid.er',
             'logo' => 'logo-putih.png',
             'favicon' => 'favicon.png',
+            'login_logo' => 'login-logo.png',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);

@@ -75,6 +75,11 @@
                                 <input type="file" name="favicon" class="form-control" id="favicon"
                                     value="{{ $item->favicon }}">
                             </div>
+                            <div class="form-group">
+                                <label for="logo_login">Logo Login</label>
+                                <input type="file" name="logo_login" class="form-control" id="logo_login"
+                                    value="{{ $item->logo_login }}">
+                            </div>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </form>
                     </div>
@@ -93,6 +98,11 @@
                             <div class="form-group col-md-6">
                                 <label for="faviocn">Favicon</label>
                                 <img src="assets/images/settings/{{ $item->favicon }}" alt="favicon"
+                                    class="favicon-settings form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="login-logo">Login Logo</label>
+                                <img src="assets/images/settings/{{ $item->login_logo }}" alt="login-logo"
                                     class="logo-settings form-control">
                             </div>
                         @endforeach

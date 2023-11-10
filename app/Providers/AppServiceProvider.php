@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Setting;
+use App\Models\setting;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('partials.header', function ($view) {
             $user = Auth::user();
-            $logo = Setting::all();
+            $logo = setting::all();
             $foto = User::where('id', $user->id)->get();
 
             $view->with([
