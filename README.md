@@ -65,16 +65,6 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-<h1>Cara Cloning Project</h1>
-<p>Buka Terminal Anda, Kemudian git clone https://github.com/muhammadkhalidr/Project-Arsip-Aneka-Kreasi.git</p> <br>
-<p>composer update</p>
-<p>copy .env.example ke .env</p>
-<p>sesuaikan konfigurasi database</p>
-<p>php artisan key:generate</p> <br>
-<p>php artisan migrate</p> <br>
-<p>php artisan storage:link</p> <br>
-<p>php artisan db:seed --class=UserData</p> <br>
-<p>php artisan db:seed --class=PermissionSeeder</p> <br>
-<p>php artisan serve</p>
+
 
 <h2><a href="https://khalidr.my.id">Khalid R</a></h2>
