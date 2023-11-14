@@ -12,16 +12,7 @@ class LoginController extends Controller
     public function index()
     {
         $logo = setting::all();
-        if (Auth::user()) {
-            // if ($user->level = '1') {
-            //     return redirect()->intended('orderan');
-            // } elseif ($user->level == '2') {
-            //     return redirect()->intended('owner');
-            // }
-
-            return redirect()->intended('home');
-        }
-
+        
         return view('pages.login' , [
             'logo' => $logo,
         ]);
@@ -44,14 +35,11 @@ class LoginController extends Controller
         if (Auth::attempt($kredensial)) {
             $request->session()->regenerate();
             $user = Auth::user();
-            // if ($user->level = '1') {
-            //     return redirect()->intended('orderan');
-            // } elseif ($user->level == '2') {
-            //     return redirect()->intended('owner');
-            // }
 
-            if ($user) {
-                return redirect()->intended('home');
+            if($user->hasRole('admin')){
+                return redirect()->to('home');
+            }elseif($user->hasRole('owner')) {
+                return redirect()->to('home');
             }
 
             return redirect()->intended('/');
